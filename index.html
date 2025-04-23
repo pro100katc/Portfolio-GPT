@@ -1,85 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Portfolio</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio GPT</title>
   <style>
-    html {
-      scroll-behavior: smooth;
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, sans-serif;
+      background-color: #f9fafb;
+    }
+
+    header, main, footer {
+      padding: 16px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .language-switcher {
+      text-align: right;
+      margin-bottom: 10px;
+    }
+
+    .language-switcher button {
+      margin-left: 10px;
+      padding: 4px 8px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    section {
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    .gpt-chat-container {
+      background-color: #f3f4f6;
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .gpt-input {
+      width: 100%;
+      min-height: 80px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      resize: vertical;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+
+    .gpt-button {
+      margin-top: 10px;
+      width: 100%;
+      padding: 10px;
+      background-color: #2563eb;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .gpt-button:hover {
+      background-color: #1d4ed8;
+    }
+
+    .gpt-response {
+      margin-top: 12px;
+      padding: 10px;
+      background-color: #e5e7eb;
+      border-radius: 8px;
+      font-size: 1em;
+      white-space: pre-wrap;
+    }
+
+    @media screen and (max-width: 600px) {
+      header, main, footer {
+        padding: 12px;
+      }
+
+      .gpt-button {
+        font-size: 1em;
+      }
     }
   </style>
-  
 </head>
 <body>
-    <div id="loader-wrapper">
-        <div class="loader"></div>
-      </div>
-      
   <header>
-    <div class="container">
-      <h1 class="logo">MyPortfolio</h1>
-      <nav>
-        <ul>
-          <li><a href="#hero">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
+    <div class="language-switcher">
+      <button onclick="setLanguage('uk')">Українська</button>
+      <button onclick="setLanguage('en')">English</button>
     </div>
+    <h1 id="title">Портфоліо GPT</h1>
   </header>
 
-  <section id="hero">
-    <div class="container">
-      <h2>Hi, I'm a Web Developer</h2>
-      <p>I build modern websites with HTML, CSS & JavaScript.</p>
-      <a href="#projects" class="btn">See My Work</a>
-    </div>
-  </section>
+  <main>
+    <section>
+      <h2 id="aboutTitle">Про себе</h2>
+      <p id="aboutText">Я — розробник з фокусом на сучасні вебтехнології та інтеграцію GPT у користувацький досвід.</p>
+    </section>
 
-  <section id="about">
-    <div class="container">
-      <h2>About Me</h2>
-      <p>I’m a passionate developer focused on creating responsive, accessible, and visually engaging experiences on the web.</p>
-    </div>
-  </section>
+    <section>
+      <h2 id="projectsTitle">Проєкти</h2>
+      <p id="projectsText">GPT-чат, персональний блог, API-інтеграції, мобільна адаптація сайтів.</p>
+    </section>
 
-  <section id="projects">
-    <div class="container">
-      <h2>Projects</h2>
-      <div class="project-grid">
-        <div class="project-card">
-          <h3>Project One</h3>
-          <p>A cool project description goes here.</p>
-        </div>
-        <div class="project-card">
-          <h3>Project Two</h3>
-          <p>Another awesome project with awesome tech.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    <section>
+      <h2 id="skillsTitle">Навички</h2>
+      <p id="skillsText">JavaScript, HTML, CSS, React, Node.js, API, GitHub Pages.</p>
+    </section>
 
-  <section id="contact">
-    <div class="container">
-      <h2>Contact</h2>
-      <form id="contact-form">
-        <input type="text" placeholder="Your Name" required />
-        <input type="email" placeholder="Your Email" required />
-        <textarea placeholder="Your Message" required></textarea>
-        <button type="submit">Send</button>
-      </form>
-    </div>
-  </section>
+    <section>
+      <h2 id="contactTitle">Контакти</h2>
+      <p id="contactText">Email: example@example.com</p>
+    </section>
+
+    <section class="gpt-chat-container">
+      <h2 id="chatTitle">GPT-чат</h2>
+      <textarea id="userInput" class="gpt-input" placeholder="Запитай мене щось..."></textarea>
+      <button onclick="sendToGPT()" class="gpt-button">Надіслати</button>
+      <div id="responseBox" class="gpt-response"></div>
+    </section>
+  </main>
 
   <footer>
-    <div class="container">
-      <p>© 2025 MyPortfolio. All rights reserved.</p>
-    </div>
+    <p>&copy; 2025 Portfolio GPT</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    const translations = {
+      uk: {
+        title: "Портфоліо GPT",
+        aboutTitle: "Про себе",
+        aboutText: "Я — розробник з фокусом на сучасні вебтехнології та інтеграцію GPT у користувацький досвід.",
+        projectsTitle: "Проєкти",
+        projectsText: "GPT-чат, персональний блог, API-інтеграції, мобільна адаптація сайтів.",
+        skillsTitle: "Навички",
+        skillsText: "JavaScript, HTML, CSS, React, Node.js, API, GitHub Pages.",
+        contactTitle: "Контакти",
+        contactText: "Email: example@example.com",
+        chatTitle: "GPT-чат"
+      },
+      en: {
+        title: "GPT Portfolio",
+        aboutTitle: "About Me",
+        aboutText: "I'm a developer focused on modern web technologies and integrating GPT into user experiences.",
+        projectsTitle: "Projects",
+        projectsText: "GPT Chat, personal blog, API integrations, mobile adaptation of websites.",
+        skillsTitle: "Skills",
+        skillsText: "JavaScript, HTML, CSS, React, Node.js, API, GitHub Pages.",
+        contactTitle: "Contacts",
+        contactText: "Email: example@example.com",
+        chatTitle: "GPT Chat"
+      }
+    };
+
+    function setLanguage(lang) {
+      Object.keys(translations[lang]).forEach(id => {
+        document.getElementById(id).innerText = translations[lang][id];
+      });
+    }
+
+    async function sendToGPT() {
+      const input = document.getElementById("userInput").value;
+      const responseBox = document.getElementById("responseBox");
+
+      const fakeResponses = [
+        "Цікаве питання! Можу розповісти про мій досвід роботи з React.",
+        "Я займався кількома проєктами, пов’язаними з інтеграцією API.",
+        "Дякую за запит! Мій улюблений стек — це JavaScript + Node.js.",
+        "Я завжди відкритий до нових викликів і можливостей розвитку.",
+        "Зараз я активно вивчаю машинне навчання та GPT-моделі."
+      ];
+
+      responseBox.innerText = "GPT: ...";
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      const randomResponse = fakeResponses[Math.floor(Math.random() * fakeResponses.length)];
+      responseBox.innerText = "GPT: " + randomResponse;
+    }
+  </script>
 </body>
 </html>
